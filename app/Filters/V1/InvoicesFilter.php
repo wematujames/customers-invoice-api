@@ -8,7 +8,7 @@ class InvoicesFilter extends FilterQuery {
     protected $allowedParams = [
         "customer_id" => ["eq", "gt", "gte", "lt", "lte"],
         "amount" => ["eq", "gt", "gte", "lt", "lte"],
-        "status" => ["eq"],
+        "status" => ["eq", "ne"],
         "billed_date" => ["eq", "gt", "gte", "lt", "lte"],
         "paid_date" => ["eq", "gt", "gte", "lt", "lte"],
     ];
@@ -20,9 +20,10 @@ class InvoicesFilter extends FilterQuery {
 
     protected $operatorMap = [
         "eq" => "=",
+        "ne" => "!=",
         "lt" => "<",
-        "gt" => ">",
         "lte" => "<=",
+        "gt" => ">",
         "gte" => ">=",
     ];
 }
