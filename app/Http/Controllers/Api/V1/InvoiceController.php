@@ -8,7 +8,7 @@ use App\Http\Requests\UpdateInvoiceRequest;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\V1\InvoiceCollection;
 use App\Http\Resources\V1\InvoiceResource;
-use App\Services\V1\FilterQuery;
+use App\Filters\V1\InvoicesFilter;
 use Illuminate\Http\Request;
 
 class InvoiceController extends Controller
@@ -17,21 +17,8 @@ class InvoiceController extends Controller
      * Display a listing of the resource.
      */
     public function index(Request $request){
-        $params = [
-            "customer_id" => ["eq", "gt", "gte", "lt", "lte"],
-            "amount" => ["eq", "gt", "gte", "lt", "lte"],
-            "status" => ["eq"],
-            "billed_date" => ["eq", "gt", "gte", "lt", "lte"],
-            "paid_date" => ["eq", "gt", "gte", "lt", "lte"],
-        ];
 
-        $columnMap = [
-            "billedDate" =>  "billed_date",
-            "paidDate" =>  "paid_date",
-        ];
-
-
-        $filter = new FilterQuery($params, $columnMap);
+        $filter = new InvoicesFilter();
         $queryItems = $filter->transform($request);
 
         if (count($queryItems) == 0){

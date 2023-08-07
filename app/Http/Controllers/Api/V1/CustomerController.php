@@ -8,7 +8,7 @@ use App\Http\Requests\UpdateCustomerRequest;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\V1\CustomerResource;
 use App\Http\Resources\V1\CustomerCollection;
-use App\Services\V1\FilterQuery;
+use App\Filters\V1\CustomersFilter;
 use Illuminate\Http\Request;
 
 class CustomerController extends Controller
@@ -18,22 +18,9 @@ class CustomerController extends Controller
      */
     public function index(Request $request)
     {
-        // Possible query params
-        $params = [
-            "name" => ["eq"], 
-            "type" => ["eq"],  
-            "email" => ["eq"],  
-            "address" => ["eq"],  
-            "city" => ["eq"],  
-            "state" => ["eq"],  
-            "postalCode" => ["eq", "gt", "lt"],  
-        ];
-        // Map for transformed column through resource
-        $columnMap = [
-            "postalCode" => "postal_code"
-        ];
+ 
         
-        $filter = new FilterQuery($params, $columnMap);
+        $filter = new CustomersFilter();
         $queryItems = $filter->transform($request);
 
         if (count($queryItems) == 0){

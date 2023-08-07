@@ -1,26 +1,13 @@
 <?php
 
-namespace App\Services\V1;
+namespace App\Filters\V1;
 
 use Illuminate\Http\Request;
 
 class FilterQuery {
-    public function __construct($params, $columMap) {
-        $this->allowedParams = $params;
-        $this->columMap = $columMap;
-    }
-    
     protected $allowedParams;
-
     protected $columMap;
-
-    protected $operatorMap = [
-        "eq" => "=",
-        "lt" => "<",
-        "gt" => ">",
-        "lte" => "<=",
-        "gte" => ">=",
-    ];
+    protected $operatorMap;
 
     public function transform (Request $request) {
         $eloQuery = [];
